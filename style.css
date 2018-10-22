@@ -1,0 +1,51 @@
+html {
+height:1px;
+}
+body{
+    height: 4em;    
+}
+#search-container{
+width:100%;
+}
+#search-container span{
+
+}
+#search-prompt{
+    font-size:12pt;
+}
+#helptext{
+    font-size: 8pt;
+}
+#page-container{
+
+}
+#bookmarks{
+
+}
+#search{
+
+}
+#people{
+   
+}
+.person{
+
+}
+.person table{
+
+}
+.person table th {
+
+}
+.person table td{
+
+}
+.person table img{
+
+}
+.person-name{
+
+}
+.person-attribute{
+
+}
