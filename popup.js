@@ -18,8 +18,21 @@
 
 //function to initialize the page
 //document.addEventListener('DOMContentLoaded', buildPresentation());
+function colorEvenWhite (){
+  console.log("colorEvenWhite -> start");
+  var c = document.getElementById("people").children;
+    console.log("colorEvenWhite -> length of people children" + c.length);
+  for(var j=0; j<c.length; j++){
+    if(j%2==1){
+      c[j].style.backgroundColor = "white";
+    }
+  }
+    console.log("colorEvenWhite -> stop");
+}
+
 
 //function to present the page to the user (first run there will be no data - second run should be filled with queried data)
+
 function buildPresentation (inUserArrayOfJSONObjs) {
   console.log("buildPresentation function START");
   
@@ -33,6 +46,7 @@ function buildPresentation (inUserArrayOfJSONObjs) {
     peopleDiv.innerHTML = '';
     var pageDiv = document.getElementById("page-container");
     if(inUserArrayOfJSONObjs[0]["id"] != "error"){
+      inUserArrayOfJSONObjs.sort( (a, b) => a.lastName.localeCompare(b.lastName));
       for(i=0; i<inUserArrayOfJSONObjs.length; i++)
       {
         var person = {};
@@ -57,13 +71,13 @@ function buildPresentation (inUserArrayOfJSONObjs) {
         person_string2 += person.personTitle + "<br>";
         person_string2 += person.department + "<br>";
         if(person.phone == ""){
-          person_string2 += "Phone number not listed<br>";      
+          person_string2 += "Phone N/A<br>";      
         }else{
           person_string2+= person.phone +"<br>";
         }
-        person_string2 += person.email + "<br>";
+        person_string2 += "<a href=\"mailto:" + person.email + "\">" + person.email + "</a><br>";
         if(person.mailbox == ""){
-          person_string2 += "Mailbox not listed<br>";      
+          person_string2 += "Mailbox N/A<br>";      
         }else{
           person_string2+= person.mailbox +"<br>";
         }
@@ -74,7 +88,7 @@ function buildPresentation (inUserArrayOfJSONObjs) {
         person_string = "<div class=\"person\">";
         person_string += "<table>";
         person_string +=  "<tr><th colspan=\"2\">"+person.firstName + " " + person.lastName + "<\/th><\/tr>";    
-        person_string +=  "<tr><td>Email<\/td><td>"+person.email+"<\/td><\/tr>"; 
+        person_string +=  "<tr><td>Email<\/td><td><a href=\"mailto:" + person.email + "\">" + person.email + "</a><\/td><\/tr>"; 
         person_string +=  "<tr><td>Phone<\/td>"; 
         if(person.phone==null){
           person_string+="<td>"+nastring+"<\/td><\/tr>";      
@@ -89,9 +103,11 @@ function buildPresentation (inUserArrayOfJSONObjs) {
         peopleDiv.innerHTML += person_string2;
 
         }
+        colorEvenWhite();
       }
       else{
         peopleDiv.innerHTML += "No results found";
+        peopleDiv.style.backgroundColor = "white";
       }
   }else{
     console.log("buildPresentation -> no seach query present");
@@ -170,7 +186,9 @@ function fireQuery(inQuery){
 function resize(){
   document.documentElement.style.height = "%100";
 }
-function buildZehPage() {
+
+function buildZehPage(inBool) {
+  var popUpButtonSet=true;
   setTimeout(resize, 200);
 
   /* add event listener to search box*/
@@ -189,12 +207,34 @@ function buildZehPage() {
       var queryString = elem.value;
       console.log('buildZehPage -> Button pressed');
       console.log('buildZehPage -> innerHTML values passed to fireQuery -> ' + queryString);          
-      fireQuery(queryString); 
+  });
+  if (popUpButtonSet==true){
+    //var queryValue = elem.value;
+    var popOut = document.getElementById("popup-icon");
+    
+    popOut.addEventListener("click", function(){
+      console.log('buildZehPage -> popOut event listener hit');
+      chrome.windows.create({
+        type: 'popup',
+        focused: true,
+        state: 'normal',
+        url: 'popup.html',
+        width: 259
+      }, function(popOutWindow){
+        console.log('buildZehPage -> popOut -> creating window callback function called');
+        console.log('buildZehPage -> popOutWindow length: ' + popOutWindow.length);
+        console.log('buildZehPage -> popOutWindow data: ' + popOutWindow);
+        console.log('buildZehPage -> popOutWindow type: ' + typeof(popOutWindow));
+
+      //  var popOutDiv = popOutWindow.getElementById("img-pop");
+      //  popOutDiv.syle.visibility = "hidden";
+      });
     });
+  }    
   /* place focus on search box - users can start typing right away! */
   document.getElementById("search").focus();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  buildZehPage();
+  buildZehPage(true);
 });

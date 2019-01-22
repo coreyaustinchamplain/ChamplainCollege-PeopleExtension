@@ -5,19 +5,30 @@ body{
     height: 4em;    
 }
 #search-container{
-width:100%;
+    position: relative;
+    left: -8;
+    /* padding-bottom: 11px; */
+    /* background: black; */
+    width: 259px;
+    top: -8;
+    padding-left: 4;
+    padding-top: 8;
 }
 #search-container span{
 
 }
 #search-prompt{
     font-size:12pt;
+    padding-bottom: 5px;
 }
 #helptext{
     font-size: 8pt;
+    padding-top: 5px;
+    padding-bottom:5px;
 }
 #page-container{
-
+width: 243px;
+margin-right: -13;
 }
 #bookmarks{
 
@@ -25,8 +36,26 @@ width:100%;
 #search{
 
 }
+
 #people{
-   
+	width: 259;
+	position: relative;
+	left: -8px;
+	padding-left: 4px;
+	padding-right: 4px; 
+	top: -8;
+}
+#people p{
+	width: 100%;
+	/*TODO setup javascript to set this up for every other one*/
+    background: #ECECEC;
+    position: relative;
+    left: -4;
+    padding-left: 4;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 4;
+    padding-bottom: 4;
 }
 .person{
 
@@ -48,4 +77,25 @@ width:100%;
 }
 .person-attribute{
 
+}
+
+#popup-icon img{
+    float: right;
+    height: 2em;
+
+}
+#popup-icon img{
+    transition: 0.3s;
+}
+#popup-icon:hover{
+  background-color: #3e8e41;
+}
+
+#footer{
+    padding-right:8px;
+    height: 2em;
+}
+
+#changePopIcon{
+    
 }
